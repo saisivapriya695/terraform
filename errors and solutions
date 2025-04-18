@@ -1,0 +1,60 @@
+1. Missing Required Attribute: sku_name
+Error Message:
+
+The argument "sku_name" is required, but no definition was found.
+Cause: The azurerm_service_plan resource requires a sku_name, even for the free (consumption) tier.
+
+Solution: Add the following to the azurerm_service_plan block:
+sku_name = "Y1"  # For Linux Consumption Plan
+
+2. Unconfigurable Attribute: kind
+Error Message:
+
+Can't configure a value for "kind": its value will be decided automatically...
+Cause: Terraform automatically derives the kind of the service plan when os_type is provided.
+
+Solution: Remove this line:
+
+kind = "FunctionApp"
+3. Unsupported Block Type: sku
+Error Message:
+
+Blocks of type "sku" are not expected here.
+Cause: You're using an older format. The latest Terraform Azure provider expects sku_name directly, not inside a sku block.
+
+Solution: Replace:
+
+sku {
+  tier = "Dynamic"
+  size = "Y1"
+}
+ With:
+sku_name = "Y1"
+
+4. Unconfigurable Attribute: linux_fx_version
+Error Message:
+
+Can't configure a value for "site_config.0.linux_fx_version"...
+Cause: Terraform Azure Provider v3+ made linux_fx_version read-only in site_config. You must set it under the root-level property.
+
+Solution:Move it out of site_config:
+
+site_config {
+  linux_fx_version = "DOCKER|<image>"
+}
+becomes:
+
+linux_fx_version = "DOCKER|<image>"
+
+5. Variables Not Reflected During Plan
+Error Message:
+
+Error: Missing required value for "container_image"
+Cause: You defined variables but didn’t include terraform.tfvars file or pass them manually.
+
+Solution: Create terraform.tfvars file:
+
+container_image = "saisivapriya695/simpletimeservice:latest"
+Or pass variables manually:
+
+terraform apply -var="container_image=your_image"
