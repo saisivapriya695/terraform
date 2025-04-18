@@ -3,40 +3,40 @@
 Pre-requisites
 Before starting the task, ensure you have the following tools and accounts:
 
-Azure Account:
+**Azure Account**:
 
 An active Azure subscription is required to deploy the resources.
 
 Ensure you have the appropriate permissions to create resources like function apps, resource groups, storage accounts, and service plans.
 
-Terraform:
+**Terraform**:
 
 Ensure you have Terraform installed. You can download it from browser
 
 Terraform v1.11.4 or later is recommended.
 
-Docker:
+**Docker**:
 
 Ensure Docker is installed and working on your machine. 
 
-Azure CLI:
+**Azure CLI**:
 
 Install the Azure CLI to interact with Azure resources directly from your terminal. .
 
-Git:
+**Git**:
 
 Install Git to manage your source code.
 
-Docker Image:
+**Docker Image**:
 
 Make sure the Docker image you want to deploy is available in Docker Hub or your container registry. In this example, we're using saisivapriya695/simpletimeservice:latest.
 
 Step-by-Step Process
-Step 1: Set up Terraform Files
+**Step 1**: Set up Terraform Files
 Create the necessary Terraform configuration files to define your infrastructure:
 in vs code create a folder for all the terraform files to reside in [here it is terraform] and create each of the file and add the below codes to respective files.
 
-main.tf:[you can also clone it from the git hud repo i shared]
+**main.tf**:[you can also clone it from the git hud repo i shared]
 
 Define your resource group, storage account, service plan, and the function app.
 
@@ -83,7 +83,7 @@ resource "azurerm_linux_function_app" "function" {
   }
 }
 
-terraform.tfvars:
+**terraform.tfvars**:
 
 If you are using variables for your Terraform configuration, define them here as 
 resource_group_name   = "simpletimeapp-rg"
@@ -92,7 +92,7 @@ function_app_name     = "simpletimeapp-fn"
 service_plan_name     = "simpletimeapp-plan"
 container_image       = "saisivapriya695/simpletimeservice:latest"
 
-variables.tf:
+**variables.tf**:
 
 variable "location" {
   description = "The Azure location where resources will be deployed"
@@ -125,7 +125,7 @@ variable "container_image" {
   type        = string
 }
 
-.gitignore:
+**.gitignore**:
 
 to secure secrets and api keys without sharing then through git repo use this
 
@@ -153,25 +153,25 @@ override.tf.json
 
 
 
-Step 2: Initialize Terraform
+**Step 2**: Initialize Terraform
 Before applying the Terraform configuration, run the following command to initialize Terraform:
 
 terraform init
 This will download the required provider plugins and prepare the configuration for execution.
 
-Step 3: Review the Plan
+**Step 3**: Review the Plan
 Once initialized, run terraform plan to see the changes that will be made in your Azure environment:
 
 terraform plan
 Review the plan carefully to ensure all resources are defined correctly.
 
-Step 4: Apply the Terraform Configuration
+**Step 4:** Apply the Terraform Configuration
 Once you're satisfied with the plan, run the following command to apply the configuration and create the resources:
 
 terraform apply
 Terraform will ask for confirmation before applying the changes. Type yes to proceed.
 
-Step 5: Verify the Deployment
+**Step 5**: Verify the Deployment
 After the apply command completes successfully, your Docker container will be deployed to the Azure Function App, and you can verify the following:
 
 Resource Group: A new resource group simpletimeapp-rg should be created.
